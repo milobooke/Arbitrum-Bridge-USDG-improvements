@@ -8,7 +8,7 @@ A clickable design prototype of the USDG incentives banner for the [Arbitrum Bri
 
 - **Token selection:** the banner appears only when USDG is the selected token. Pick ETH or ARB in the token selector and it goes away.
 - **Direction:** the swap arrows flip Ethereum → Arbitrum One and back. The banner shows in both directions.
-- **Dismiss:** closing the banner keeps it hidden in that browser. "Show banner again" in the top strip resets it.
+- **Dismiss:** closing the banner keeps it hidden in that browser, as it would in production.
 - **Mobile:** narrow the window, or open the link on a phone, to see the mobile layout.
 
 ## Banner spec

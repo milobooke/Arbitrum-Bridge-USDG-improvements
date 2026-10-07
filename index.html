@@ -48,13 +48,6 @@ img { display: block; }
 :focus-visible { outline: 2px solid var(--earn); outline-offset: 2px; }
 input::placeholder { color: var(--placeholder); opacity: 1; }
 
-/* Prototype label */
-.proto { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px 12px; padding: 8px 16px; background: var(--tile); border-bottom: 1px solid var(--line); font-size: 12px; line-height: 16px; color: var(--fg-2); text-align: center; }
-.proto-tag { display: inline-flex; align-items: center; height: 20px; padding: 0 8px; border: 1px solid var(--line-strong); border-radius: 999px; color: var(--fg); font-size: 11px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase; }
-.proto-reset { height: 24px; padding: 0 10px; border: 1px solid var(--line-strong); border-radius: 8px; background: transparent; font-size: 12px; line-height: 16px; color: var(--fg); }
-.proto-reset:disabled { opacity: 0.4; cursor: default; }
-.proto-reset:not(:disabled):hover { background: var(--field); }
-
 /* Header */
 .shell { position: relative; }
 .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; display: flex; align-items: center; gap: 8px; height: 66px; padding: 0 16px; background: rgba(0,0,0,0.7); -webkit-backdrop-filter: blur(4px); backdrop-filter: blur(4px); }
@@ -204,21 +197,11 @@ main { padding: 15px 16px 64px; }
   .scrim { padding-top: 24px; align-items: flex-start; }
   .sheet { max-height: calc(100vh - 48px); }
   .toast { bottom: calc(106px + env(safe-area-inset-bottom, 0px)); }
-  .proto-long { display: none; }
-  .proto { flex-wrap: nowrap; gap: 8px; }
 }
-@media (min-width: 768px) { .proto-short { display: none; } }
 @media (prefers-reduced-motion: reduce) { .swap svg { transition: none; } .swap:hover svg { transform: none; } }
 </style>
 </head>
 <body>
-<div class="proto" role="note">
-  <span class="proto-tag">Prototype</span>
-  <span class="proto-long">USDG incentives banner on the Arbitrum Bridge. It appears whenever USDG is the selected token.</span>
-  <span class="proto-short">Banner shows for USDG.</span>
-  <button class="proto-reset" id="resetBanner" type="button" disabled><span class="proto-long">Show banner again</span><span class="proto-short">Reset</span></button>
-</div>
-
 <div class="shell">
   <header class="topbar">
     <div class="hdr-group">
@@ -369,7 +352,7 @@ document.querySelectorAll('img[data-a]').forEach(function (i) { i.src = A[i.getA
   try { state.dismissed = window.localStorage.getItem(KEY) === '1'; } catch (e) {}
 
   var $ = function (id) { return document.getElementById(id); };
-  var banner = $('usdgBanner'), reset = $('resetBanner'), picker = $('picker'), list = $('tokList'), search = $('tokSearch'), toast = $('toast');
+  var banner = $('usdgBanner'), picker = $('picker'), list = $('tokList'), search = $('tokSearch'), toast = $('toast');
   var lastOpener = null, toastTimer = null;
 
   function tokenBy(sym) { for (var i = 0; i < TOKENS.length; i++) if (TOKENS[i].sym === sym) return TOKENS[i]; return TOKENS[0]; }
@@ -386,7 +369,6 @@ document.querySelectorAll('img[data-a]').forEach(function (i) { i.src = A[i.getA
     out.textContent = state.amount ? state.amount : '-';
     out.classList.toggle('has-value', !!state.amount);
     banner.hidden = !(state.token === 'USDG' && !state.dismissed);
-    reset.disabled = !state.dismissed;
     var check = $('tos'); check.setAttribute('aria-checked', state.agreed ? 'true' : 'false');
   }
 
@@ -452,11 +434,6 @@ document.querySelectorAll('img[data-a]').forEach(function (i) { i.src = A[i.getA
   $('dismissBanner').addEventListener('click', function () {
     state.dismissed = true; try { window.localStorage.setItem(KEY, '1'); } catch (e) {}
     render(); showToast('Banner dismissed. It stays hidden for this browser.');
-  });
-  reset.addEventListener('click', function () {
-    state.dismissed = false; try { window.localStorage.removeItem(KEY); } catch (e) {}
-    if (state.token !== 'USDG') state.token = 'USDG';
-    render();
   });
   $('swap').addEventListener('click', function () { state.from = to(); render(); });
   $('tos').addEventListener('click', function () { state.agreed = !state.agreed; render(); });
