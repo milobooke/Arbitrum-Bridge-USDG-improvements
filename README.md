@@ -1,27 +1,28 @@
 # Arbitrum Bridge USDG improvements
 
-A clickable design prototype of the USDG incentives banner for the [Arbitrum Bridge](https://portal.arbitrum.io/bridge). It is a static mock-up for internal review, not the live bridge. Wallet actions are turned off.
+A clickable design prototype of the USDG incentives card for the [Arbitrum Bridge](https://portal.arbitrum.io/bridge). It is a static mock-up for internal review, not the live bridge. It uses a demo wallet and never sends anything.
 
 **Live demo:** https://milobooke.github.io/Arbitrum-Bridge-USDG-improvements/
 
 ## What to try
 
-- **Token selection:** the banner appears only when USDG is the selected token. Pick ETH or ARB in the token selector and it goes away.
-- **Direction:** the swap arrows flip Ethereum → Arbitrum One and back. The banner shows in both directions.
-- **Dismiss:** closing the banner keeps it hidden in that browser, as it would in production.
-- **Mobile:** narrow the window, or open the link on a phone, to see the mobile layout.
+1. With USDG selected and Arbitrum One as the destination, tick the Terms checkbox and press **Move funds**.
+2. After the transfer is submitted, the USDG card slides in from the right (from the bottom on mobile).
+3. Close it, then move funds again. The card comes back after every USDG transfer to Arbitrum One.
+4. Pick ETH or ARB, or flip the direction to Arbitrum One → Ethereum, and move funds. The card does not appear.
 
-## Banner spec
+## Card spec
 
 | | |
 |---|---|
+| Trigger | The user presses Move funds with USDG as the asset and Arbitrum One as the destination chain |
+| Timing | Shows after the transfer is submitted, never before, so it doesn't interrupt the transfer |
+| Persistence | Stays open until the user closes it. Shows again after every USDG transfer to Arbitrum One |
+| Placement | Desktop: fixed to the top right, slides in from the right edge, 360px wide. Mobile: full width above the bottom navigation |
+| Tag | DRIP program |
 | Headline | Earn incentivized rewards with your USDG |
-| Subline | Supply USDG to Morpho or GMX vaults — up to 8% APR. |
-| Call to action | View vaults → https://arbitrumdrip.com/ (opens in a new tab) |
-| When it shows | The selected token is USDG, as the source or destination asset |
-| Placement | Top of the bridge column, above the transfer panel, same 600px width, 12px gap |
-| Dismissal | Close button hides it; remember the choice per browser |
-| Mobile | Sits between the Bridge / Txns / Buy tabs and the transfer panel. "View vaults" becomes a full-width button |
+| Body | Once your USDG reaches Arbitrum One, supply it to Morpho or GMX vaults through Arbitrum’s DRIP program and earn up to 8% APR. |
+| Call to action | Learn More → https://arbitrumdrip.com/opportunities (opens in a new tab) |
 
 The 8% APR figure was the top Drip rate on launch day (October 6, 2026). In production, pull it live or drop the number.
 
@@ -30,3 +31,4 @@ Rewards come from supplying USDG to third-party vaults, not from holding USDG, a
 ## Files
 
 - `index.html` is the whole prototype, with logos and icons inlined.
+- `og.png` is the link preview image and `favicon.png` the browser tab icon.

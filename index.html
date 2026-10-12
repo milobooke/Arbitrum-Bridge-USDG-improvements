@@ -4,20 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow">
-<meta name="description" content="Design prototype of the USDG incentives banner on the Arbitrum Bridge. This is not the live bridge.">
+<meta name="description" content="Design prototype of the USDG incentives card on the Arbitrum Bridge. This is not the live bridge.">
 <meta name="theme-color" content="#000000">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Arbitrum Bridge prototype">
-<meta property="og:title" content="USDG incentives banner · Arbitrum Bridge prototype">
-<meta property="og:description" content="Clickable prototype of the USDG incentives banner on the Arbitrum Bridge. Try it on desktop or mobile.">
+<meta property="og:title" content="USDG incentives card · Arbitrum Bridge prototype">
+<meta property="og:description" content="Clickable prototype of the USDG incentives card that appears after you move USDG to Arbitrum One on the Arbitrum Bridge.">
 <meta property="og:url" content="https://milobooke.github.io/Arbitrum-Bridge-USDG-improvements/">
 <meta property="og:image" content="https://milobooke.github.io/Arbitrum-Bridge-USDG-improvements/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="The USDG incentives banner above the Arbitrum Bridge transfer panel.">
+<meta property="og:image:alt" content="The USDG incentives card beside the Arbitrum Bridge transfer panel.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="USDG incentives banner · Arbitrum Bridge prototype">
-<meta name="twitter:description" content="Clickable prototype of the USDG incentives banner on the Arbitrum Bridge. Try it on desktop or mobile.">
+<meta name="twitter:title" content="USDG incentives card · Arbitrum Bridge prototype">
+<meta name="twitter:description" content="Clickable prototype of the USDG incentives card that appears after you move USDG to Arbitrum One on the Arbitrum Bridge.">
 <meta name="twitter:image" content="https://milobooke.github.io/Arbitrum-Bridge-USDG-improvements/og.png">
 <link rel="icon" type="image/png" href="favicon.png">
 <title>USDG Banner Prototype</title>
@@ -95,18 +95,27 @@ input::placeholder { color: var(--placeholder); opacity: 1; }
 main { padding: 15px 16px 64px; }
 .col { display: flex; flex-direction: column; gap: 12px; max-width: 600px; margin: 0 auto; }
 
-/* USDG incentives banner */
-.bn { display: grid; grid-template-columns: 40px minmax(0, 1fr) auto auto; grid-template-areas: "logo text cta close"; align-items: center; column-gap: 12px; padding: 12px 12px 12px 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
-.bn-logo { grid-area: logo; width: 40px; height: 40px; border-radius: 50%; }
-.bn-text { grid-area: text; display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.bn-title { margin: 0; font-size: 15px; font-weight: 500; line-height: 20px; text-wrap: balance; }
-.bn-sub { margin: 0; font-size: 13px; line-height: 18px; color: var(--fg-2); }
-.bn-sub strong { color: var(--usdg); font-weight: 500; }
-.nw { white-space: nowrap; }
-.bn-cta { grid-area: cta; display: inline-flex; align-items: center; justify-content: center; gap: 6px; height: 38px; padding: 0 12px; border: 1px solid var(--line-strong); border-radius: 10px; font-size: 14px; line-height: 20px; text-decoration: none; white-space: nowrap; }
-.bn-cta:hover { background: rgba(255,255,255,0.08); }
-.bn-close { grid-area: close; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin-left: -8px; padding: 0; border: 0; border-radius: 8px; background: transparent; color: var(--fg-3); }
-.bn-close:hover { background: var(--field); color: var(--fg); }
+/* Demo wallet pill */
+.wallet { display: inline-flex; align-items: center; gap: 8px; height: 36px; padding: 0 14px; border: 0; border-radius: 10px; background: var(--tile); font-size: 14px; font-weight: 500; line-height: 20px; white-space: nowrap; }
+.wallet:hover { opacity: 0.8; }
+.wallet-dot { width: 8px; height: 8px; border-radius: 50%; background: #6ee787; }
+
+/* USDG incentives card: slides in from the right after a USDG transfer to Arbitrum One */
+.promo { position: fixed; top: calc(81px + env(safe-area-inset-top, 0px)); right: 16px; z-index: 40; display: flex; flex-direction: column; gap: 14px; width: 360px; max-width: calc(100% - 32px); padding: 16px; border: 1px solid var(--line-strong); border-radius: 12px; background: var(--surface); box-shadow: 0 24px 64px rgba(0,0,0,0.6); transform: translateX(calc(100% + 32px)); opacity: 0; visibility: hidden; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease, visibility 0s linear 0.4s; }
+.promo.is-open { transform: translateX(0); opacity: 1; visibility: visible; transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s ease; }
+.promo-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.promo-tag { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 999px; background: rgba(199,227,108,0.14); color: var(--usdg); font-size: 12px; font-weight: 500; line-height: 16px; letter-spacing: 0.02em; }
+.promo-close { display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; margin: -6px -6px -6px 0; padding: 0; border: 0; border-radius: 8px; background: transparent; color: var(--fg-3); }
+.promo-close:hover { background: var(--field); color: var(--fg); }
+.promo-body { display: flex; align-items: flex-start; gap: 12px; }
+.promo-logo { flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%; }
+.promo-text { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.promo-title { margin: 0; font-size: 16px; font-weight: 500; line-height: 22px; text-wrap: balance; }
+.promo-sub { margin: 0; font-size: 14px; line-height: 20px; color: var(--fg-2); }
+.promo-sub strong { color: var(--usdg); font-weight: 500; }
+.promo-cta { display: flex; align-items: center; justify-content: center; gap: 6px; height: 40px; border: 1px solid var(--line-strong); border-radius: 10px; font-size: 14px; line-height: 20px; text-decoration: none; }
+.promo-cta:hover { background: rgba(255,255,255,0.08); }
+.connect[aria-busy="true"] { opacity: 0.7; cursor: progress; }
 
 /* Bridge card */
 .card { display: flex; flex-direction: column; gap: 16px; padding: 16px; border-radius: 10px; background: var(--surface); }
@@ -190,10 +199,9 @@ main { padding: 15px 16px 64px; }
   .tabbar span { font-size: 14px; line-height: 20px; }
   .tabbar a[aria-current="page"] span { font-weight: 600; }
 
-  .bn { grid-template-columns: 36px minmax(0, 1fr) 32px; grid-template-areas: "logo text close" "cta cta cta"; align-items: start; column-gap: 10px; row-gap: 12px; padding: 12px; }
-  .bn-logo { width: 36px; height: 36px; margin-top: 2px; }
-  .bn-cta { height: 40px; }
-  .bn-close { margin: -4px -4px 0 0; }
+  .promo { top: auto; bottom: calc(106px + env(safe-area-inset-bottom, 0px)); left: 16px; right: 16px; width: auto; max-width: none; }
+  .promo-cta { height: 44px; }
+  .wallet { padding: 0 12px; }
 
   .field input, .to-amount { font-size: 22px; line-height: 33px; }
   .terms { min-height: 48px; }
@@ -211,9 +219,9 @@ main { padding: 15px 16px 64px; }
 
   .scrim { padding-top: 24px; align-items: flex-start; }
   .sheet { max-height: calc(100vh - 48px); }
-  .toast { bottom: calc(106px + env(safe-area-inset-bottom, 0px)); }
+  .toast { top: calc(76px + env(safe-area-inset-top, 0px)); bottom: auto; }
 }
-@media (prefers-reduced-motion: reduce) { .swap svg { transition: none; } .swap:hover svg { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .swap svg { transition: none; } .swap:hover svg { transform: none; } .promo, .promo.is-open { transition: none; } }
 </style>
 </head>
 <body>
@@ -232,7 +240,7 @@ main { padding: 15px 16px 64px; }
     </nav>
     <div class="hdr-group hdr-right">
       <button class="tile search-m" type="button" aria-label="Search" data-toast="Search isn't part of this prototype."><img data-a="i_search" src="" alt="" width="16" height="16"></button>
-      <button class="btn-cta" type="button" data-toast="Wallet connection is turned off in this prototype.">Connect Wallet</button>
+      <button class="wallet" type="button" data-toast="This prototype uses a demo wallet. Nothing is ever sent."><span class="wallet-dot" aria-hidden="true"></span>Demo wallet</button>
     </div>
   </header>
 
@@ -250,20 +258,6 @@ main { padding: 15px 16px 64px; }
     </nav>
 
     <div class="col">
-      <aside class="bn" id="usdgBanner" aria-label="USDG incentives">
-        <img class="bn-logo" data-a="usdg" src="" alt="USDG" width="40" height="40">
-        <div class="bn-text">
-          <p class="bn-title">Earn incentivized rewards with your USDG</p>
-          <p class="bn-sub">Supply USDG to Morpho or GMX vaults — <span class="nw">up to <strong>8% APR</strong>.</span></p>
-        </div>
-        <a class="bn-cta" href="https://arbitrumdrip.com/" target="_blank" rel="noopener noreferrer">View vaults
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
-        </a>
-        <button class="bn-close" id="dismissBanner" type="button" aria-label="Dismiss USDG incentives banner">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
-        </button>
-      </aside>
-
       <section class="card" aria-label="Bridge">
         <div class="panels">
           <div class="panel">
@@ -271,7 +265,7 @@ main { padding: 15px 16px 64px; }
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></button></div>
             <div class="amount-group">
               <div class="field">
-                <input id="amount" type="text" inputmode="decimal" autocomplete="off" aria-label="Amount to bridge" placeholder="0">
+                <input id="amount" type="text" inputmode="decimal" autocomplete="off" aria-label="Amount to bridge" placeholder="0" value="100">
                 <button class="tok" type="button" data-open-picker aria-haspopup="dialog" aria-label="Select token"><img id="fromTokImg" data-a="usdg" src="" alt="" width="20" height="20"><span id="fromTokSym">USDG</span>
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/></svg></button>
               </div>
@@ -309,10 +303,32 @@ main { padding: 15px 16px 64px; }
           <label id="tosLabel" for="tos">I have read and agree to the <a href="https://arbitrum.io/tos" target="_blank" rel="noopener noreferrer">Terms and Conditions</a>.</label>
         </div>
 
-        <button class="connect" type="button" data-toast="Wallet connection is turned off in this prototype.">Connect Wallet</button>
+        <button class="connect" id="moveFunds" type="button">Move funds</button>
       </section>
     </div>
   </main>
+
+  <aside class="promo" id="promo" aria-label="USDG incentives" aria-hidden="true">
+    <div class="promo-head">
+      <span class="promo-tag">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5s6 6.4 6 10.9a6 6 0 0 1-12 0c0-4.5 6-10.9 6-10.9z"/></svg>
+        DRIP program
+      </span>
+      <button class="promo-close" id="promoClose" type="button" aria-label="Close USDG incentives">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="promo-body">
+      <img class="promo-logo" data-a="usdg" src="" alt="USDG" width="40" height="40">
+      <div class="promo-text">
+        <p class="promo-title">Earn incentivized rewards with your USDG</p>
+        <p class="promo-sub">Once your USDG reaches Arbitrum One, supply it to Morpho or GMX vaults through Arbitrum’s DRIP program and earn up to <strong>8% APR</strong>.</p>
+      </div>
+    </div>
+    <a class="promo-cta" href="https://arbitrumdrip.com/opportunities" target="_blank" rel="noopener noreferrer">Learn More
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 19.5 15-15m0 0H8.25m11.25 0v11.25"/></svg>
+    </a>
+  </aside>
 
   <nav class="bottomnav" aria-label="Portal">
     <a href="https://portal.arbitrum.io/" target="_blank" rel="noopener noreferrer"><img data-a="i_home" src="" alt="" width="32" height="32"><span>Home</span></a>
@@ -353,7 +369,6 @@ var A = {"arbitrum":"data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/s
 document.querySelectorAll('img[data-a]').forEach(function (i) { i.src = A[i.getAttribute('data-a')]; });
 (function () { var l = document.createElement('link'); l.rel = 'icon'; l.href = A.arbitrum; document.head.appendChild(l); })();
 (function () {
-  var KEY = 'usdg-drip-banner-dismissed';
   var CHAINS = {
     'ethereum': { name: 'Ethereum', logo: A.ethereum, bg: 'rgba(69,74,117,0.46)' },
     'arbitrum-one': { name: 'Arbitrum One', logo: A.arbitrum_one, bg: 'rgba(27,74,221,0.46)' }
@@ -363,11 +378,10 @@ document.querySelectorAll('img[data-a]').forEach(function (i) { i.src = A[i.getA
     { sym: 'USDG', name: 'Global Dollar', logo: A.usdg, addr: { 'ethereum': '0xe34…491d', 'arbitrum-one': '0xe34…491d' }, lists: 'LiFi Tokens', bal: '0 USDG', usd: '$0.00 USD' },
     { sym: 'ARB', name: 'Arbitrum', logo: A.arbitrum, badge: 'Official ARB token', addr: { 'ethereum': '0xb50…4ad1', 'arbitrum-one': '0x912…6548' }, lists: 'Arbitrum Token and 3 more lists', bal: '0 ARB' }
   ];
-  var state = { token: 'USDG', from: 'ethereum', dismissed: false, agreed: false, amount: '' };
-  try { state.dismissed = window.localStorage.getItem(KEY) === '1'; } catch (e) {}
+  var state = { token: 'USDG', from: 'ethereum', agreed: false, amount: '100', sending: false };
 
   var $ = function (id) { return document.getElementById(id); };
-  var banner = $('usdgBanner'), picker = $('picker'), list = $('tokList'), search = $('tokSearch'), toast = $('toast');
+  var promo = $('promo'), move = $('moveFunds'), picker = $('picker'), list = $('tokList'), search = $('tokSearch'), toast = $('toast');
   var lastOpener = null, toastTimer = null;
 
   function tokenBy(sym) { for (var i = 0; i < TOKENS.length; i++) if (TOKENS[i].sym === sym) return TOKENS[i]; return TOKENS[0]; }
@@ -383,7 +397,8 @@ document.querySelectorAll('img[data-a]').forEach(function (i) { i.src = A[i.getA
     var out = $('toAmount');
     out.textContent = state.amount ? state.amount : '-';
     out.classList.toggle('has-value', !!state.amount);
-    banner.hidden = !(state.token === 'USDG' && !state.dismissed);
+    move.textContent = state.sending ? 'Moving funds…' : 'Move funds';
+    move.setAttribute('aria-busy', state.sending ? 'true' : 'false');
     var check = $('tos'); check.setAttribute('aria-checked', state.agreed ? 'true' : 'false');
   }
 
@@ -446,9 +461,27 @@ document.querySelectorAll('img[data-a]').forEach(function (i) { i.src = A[i.getA
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !picker.hidden) closePicker(); });
   search.addEventListener('input', function () { buildList(search.value); });
 
-  $('dismissBanner').addEventListener('click', function () {
-    state.dismissed = true; try { window.localStorage.setItem(KEY, '1'); } catch (e) {}
-    render(); showToast('Banner dismissed. It stays hidden for this browser.');
+  // The USDG card shows after every USDG transfer into Arbitrum One and stays until closed.
+  function openPromo() {
+    promo.classList.remove('is-open'); void promo.offsetWidth;
+    promo.classList.add('is-open'); promo.setAttribute('aria-hidden', 'false');
+  }
+  function closePromo() {
+    promo.classList.remove('is-open'); promo.setAttribute('aria-hidden', 'true'); move.focus();
+  }
+  $('promoClose').addEventListener('click', closePromo);
+
+  move.addEventListener('click', function () {
+    if (state.sending) return;
+    if (!state.amount || Number(state.amount) <= 0) { showToast('Enter an amount to move.'); $('amount').focus(); return; }
+    if (!state.agreed) { showToast('Agree to the Terms and Conditions to continue.'); return; }
+    state.sending = true; render();
+    setTimeout(function () {
+      var tok = state.token, dest = to();
+      state.sending = false; state.amount = ''; $('amount').value = ''; render();
+      showToast('Transfer submitted. This is a demo, so nothing was sent.');
+      if (tok === 'USDG' && dest === 'arbitrum-one') openPromo();
+    }, 1200);
   });
   $('swap').addEventListener('click', function () { state.from = to(); render(); });
   $('tos').addEventListener('click', function () { state.agreed = !state.agreed; render(); });
