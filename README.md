@@ -21,7 +21,7 @@ A clickable design prototype of the USDG incentives card for the [Arbitrum Bridg
 | Placement | Desktop: fixed to the top right, slides in from the right edge, 360px wide. Mobile: full width above the bottom navigation |
 | Tag | DRIP program |
 | Headline | Earn incentivized rewards with your USDG |
-| Body | Once your USDG reaches Arbitrum One, supply it to Morpho or GMX vaults through Arbitrum’s DRIP program and earn up to 8% APR. |
+| Body | Supply USDG to Morpho or GMX vaults and earn up to 8% APR. |
 | Call to action | Learn More → https://arbitrumdrip.com/opportunities (opens in a new tab) |
 
 The 8% APR figure was the top Drip rate on launch day (October 6, 2026). In production, pull it live or drop the number.
